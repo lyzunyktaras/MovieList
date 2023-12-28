@@ -7,6 +7,7 @@ import com.codeseek.movie.security.jwt.JwtHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,7 +49,7 @@ public class AuthenticationService {
             userDTO.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
             return userService.createUser(userDTO);
         }
-        return null;
+        throw new AuthenticationServiceException("User already exists");
     }
 }
 

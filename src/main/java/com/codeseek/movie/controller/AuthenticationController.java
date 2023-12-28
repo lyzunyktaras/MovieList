@@ -5,6 +5,7 @@ import com.codeseek.movie.dto.RegisterUserDTO;
 import com.codeseek.movie.dto.ResponseDTO;
 import com.codeseek.movie.dto.UserDTO;
 import com.codeseek.movie.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +20,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseDTO<String> authenticateUser(@RequestBody AuthUserDTO authUserDTO) {
+    public ResponseDTO<String> authenticateUser(@Valid @RequestBody AuthUserDTO authUserDTO) {
         return new ResponseDTO<>(authenticationService.authenticateUser(authUserDTO));
     }
 
     @PostMapping("/register")
-    public ResponseDTO<UserDTO> registerUser(@RequestBody RegisterUserDTO registerUserDTO) {
+    public ResponseDTO<UserDTO> registerUser(@Valid @RequestBody RegisterUserDTO registerUserDTO) {
         return new ResponseDTO<>(authenticationService.registerUser(registerUserDTO));
     }
 }

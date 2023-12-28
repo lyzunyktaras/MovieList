@@ -12,10 +12,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserDTO getUser(String username) {
-        return userMapper.map(userRepository.findUserByUsername(username).orElseThrow());
-    }
-
     public UserDTO createUser(UserDTO userDTO) {
         return userMapper.map(userRepository.save(userMapper.map(userDTO)));
     }

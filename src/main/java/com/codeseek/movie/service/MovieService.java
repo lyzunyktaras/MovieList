@@ -37,6 +37,6 @@ public class MovieService {
     }
 
     public void deleteMovie(Long id) {
-        movieRepository.delete(movieRepository.findById(id).orElseThrow());
+        movieRepository.deleteById(id);
     }
 }

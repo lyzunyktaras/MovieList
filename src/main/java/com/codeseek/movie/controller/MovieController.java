@@ -3,6 +3,7 @@ package com.codeseek.movie.controller;
 import com.codeseek.movie.dto.MovieDTO;
 import com.codeseek.movie.dto.ResponseDTO;
 import com.codeseek.movie.service.MovieService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +33,12 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseDTO<MovieDTO> createMovie(@RequestBody MovieDTO movieDTO) {
+    public ResponseDTO<MovieDTO> createMovie(@Valid @RequestBody MovieDTO movieDTO) {
         return new ResponseDTO<>(movieService.createMovie(movieDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseDTO<MovieDTO> updateMovie(@PathVariable Long id, @RequestBody MovieDTO movieDTO) {
+    public ResponseDTO<MovieDTO> updateMovie(@PathVariable Long id, @Valid @RequestBody MovieDTO movieDTO) {
         return new ResponseDTO<>(movieService.updateMovie(id, movieDTO));
     }
 
