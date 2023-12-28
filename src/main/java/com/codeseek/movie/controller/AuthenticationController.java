@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.InstanceAlreadyExistsException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -25,7 +27,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseDTO<UserDTO> registerUser(@Valid @RequestBody RegisterUserDTO registerUserDTO) {
+    public ResponseDTO<UserDTO> registerUser(@Valid @RequestBody RegisterUserDTO registerUserDTO) throws InstanceAlreadyExistsException {
         return new ResponseDTO<>(authenticationService.registerUser(registerUserDTO));
     }
 }
