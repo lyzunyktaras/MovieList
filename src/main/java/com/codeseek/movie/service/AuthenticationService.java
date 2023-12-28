@@ -7,7 +7,6 @@ import com.codeseek.movie.security.jwt.JwtHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,6 +14,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.management.InstanceAlreadyExistsException;
 
 @Service
 @Slf4j
@@ -42,14 +43,14 @@ public class AuthenticationService {
         return jwtHelper.generateJwtToken(authentication);
     }
 
-    public UserDTO registerUser(RegisterUserDTO registerUserDTO) throws AuthenticationException {
+    public UserDTO registerUser(RegisterUserDTO registerUserDTO) throws InstanceAlreadyExistsException {
         if (!userService.userExists(registerUserDTO.getUsername())) {
             UserDTO userDTO = new UserDTO();
             userDTO.setUsername(registerUserDTO.getUsername());
             userDTO.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
             return userService.createUser(userDTO);
         }
-        throw new AuthenticationServiceException("User already exists");
+        throw new InstanceAlreadyExistsException("User already exists");
     }
 }
 

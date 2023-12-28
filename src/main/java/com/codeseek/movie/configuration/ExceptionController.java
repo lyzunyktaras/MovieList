@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.time.ZonedDateTime;
 
 @ControllerAdvice
@@ -83,6 +84,20 @@ public class ExceptionController {
                         servletWebRequest.getRequest().getRequestURI());
         return new ResponseEntity<>(errorResponseDTO, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(InstanceAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInstanceAlreadyExistsException(InstanceAlreadyExistsException instanceAlreadyExistsException,
+                                                                                 ServletWebRequest servletWebRequest) {
+        ErrorResponseDTO errorResponseDTO =
+                new ErrorResponseDTO(
+                        ZonedDateTime.now(),
+                        HttpStatus.CONFLICT.getReasonPhrase(),
+                        HttpStatus.CONFLICT.value(),
+                        instanceAlreadyExistsException.getMessage(),
+                        servletWebRequest.getRequest().getRequestURI());
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.CONFLICT);
+    }
+
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleNoResourceFoundException(NoResourceFoundException noResourceFoundException,
