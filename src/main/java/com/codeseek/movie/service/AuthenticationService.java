@@ -41,7 +41,7 @@ public class AuthenticationService {
         return jwtHelper.generateJwtToken(authentication);
     }
 
-    public UserDTO registerUser(RegisterUserDTO registerUserDTO) {
+    public UserDTO registerUser(RegisterUserDTO registerUserDTO) throws AuthenticationException {
         if (!userService.userExists(registerUserDTO.getUsername())) {
             UserDTO userDTO = new UserDTO();
             userDTO.setUsername(registerUserDTO.getUsername());
@@ -51,5 +51,4 @@ public class AuthenticationService {
         return null;
     }
 }
-
 

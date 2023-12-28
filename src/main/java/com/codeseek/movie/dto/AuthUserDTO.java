@@ -9,6 +9,5 @@ public class AuthUserDTO {
     @NotBlank(message = "Username is required")
     private String username;
     @NotBlank(message = "Password is required")
-    @JsonIgnore
     private String password;
 }

@@ -49,15 +49,21 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exceptionHandlingConfigurer ->
-                        exceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(httpSecuritySessionManagementConfigurer ->
-                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests((requests) ->
-                        requests.requestMatchers("/api/auth/**")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated())
+                .exceptionHandling(
+                        exceptionHandlingConfigurer ->
+                                exceptionHandlingConfigurer.authenticationEntryPoint(
+                                        unauthorizedHandler))
+                .sessionManagement(
+                        httpSecuritySessionManagementConfigurer ->
+                                httpSecuritySessionManagementConfigurer.sessionCreationPolicy(
+                                        SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
+                        (requests) ->
+                                requests.requestMatchers(
+                                                "/api/auth/**")
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

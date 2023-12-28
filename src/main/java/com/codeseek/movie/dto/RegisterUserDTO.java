@@ -10,6 +10,5 @@ public class RegisterUserDTO {
     private String username;
 
     @NotBlank(message = "Password is required")
-    @JsonIgnore
     private String password;
 }
