@@ -26,8 +26,8 @@ public class MovieService {
     }
 
     public MovieDTO createMovie(MovieDTO movieDTO) {
-        Movie movie = movieMapper.map(movieDTO);
-        return movieMapper.map(movieRepository.save(movie));
+        Movie movie = movieRepository.save(movieMapper.map(movieDTO));
+        return movieMapper.map(movie);
     }
 
     public MovieDTO updateMovie(Long id, MovieDTO movieDTO) {
